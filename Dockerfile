@@ -19,18 +19,21 @@ ENV DEBIAN_FRONTEND noninteractive
 # Set ENV Variables externally Moodle_URL should be overridden.
 ENV MOODLE_URL http://127.0.0.1
 
-ADD ./foreground.sh /etc/apache2/foreground.sh
 
 RUN apt-get update && \
-	apt-get -y install mysql-client pwgen python-setuptools curl git unzip apache2 php \
-		php-gd libapache2-mod-php postfix wget supervisor php-pgsql curl libcurl3 \
+	apt-get -y install mysql-client pwgen python-setuptools iputils-ping curl git unzip apache2 php \
+		php-gd libapache2-mod-php postfix wget supervisor php-pgsql libcurl3 \
 		libcurl3-dev php-curl php-xmlrpc php-intl php-mysql git-core php-xml php-mbstring php-zip php-soap cron php7.0-ldap && \
 	cd /tmp && \
 	git clone -b MOODLE_35_STABLE git://git.moodle.org/moodle.git --depth=1 && \
 	mv /tmp/moodle/* /var/www/html/ && \
 	rm /var/www/html/index.html && \
-	chown -R www-data:www-data /var/www/html && \
-	chmod +x /etc/apache2/foreground.sh
+	chown -R www-data:www-data /var/www/html
+
+ADD ./foreground.sh /etc/apache2/foreground.sh
+ADD ./env_secrets_expand.sh /etc/apache2/env_secrets_expand.sh
+
+RUN chmod +x /etc/apache2/foreground.sh && chmod +x /etc/apache2/env_secrets_expand.sh
 
 #cron
 COPY moodlecron /etc/cron.d/moodlecron

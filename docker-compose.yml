@@ -15,10 +15,10 @@ services:
             restart_policy:
                 condition: any
     moodleapp:
-        image: jhardison/moodle:latest
+        image: uschti/moodle:latest
         links:
             - dbapp:DB
-        depends_on: 
+        depends_on:
             - dbapp
         restart: always
         volumes:
@@ -34,9 +34,9 @@ services:
         deploy:
             replicas: 1
             restart_policy:
-                condition: any            
+                condition: any
 
-volumes: 
+volumes:
     db-volume:
     moodleapp-data:
 

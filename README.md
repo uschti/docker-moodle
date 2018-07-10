@@ -1,8 +1,10 @@
 docker-moodle
 =============
-[![](https://images.microbadger.com/badges/image/jhardison/moodle.svg)](https://microbadger.com/images/jhardison/moodle "Get your own image badge on microbadger.com")
+[![](https://images.microbadger.com/badges/image/uschti/moodle.svg)](https://microbadger.com/images/uschti/moodle "Get your own image badge on microbadger.com")
 
 A Dockerfile that installs and runs the latest Moodle 3.4 stable, with external MySQL Database.
+
+It include the Docker secret expand script to allow Docker secret to get recognized as Environment variables, thanks to [medium.com](https://medium.com/@basi/docker-environment-variables-expanded-from-secrets-8fa70617b3bc).
 
 `Note: DB Deployment uses version 5 of MySQL. MySQL:Latest is now v8.`
 
@@ -17,7 +19,7 @@ Tags:
 ## Installation
 
 ```
-git clone https://github.com/jmhardison/docker-moodle
+git clone https://github.com/uschti/docker-moodle
 cd docker-moodle
 docker build -t moodle .
 ```
@@ -32,13 +34,13 @@ To spawn a new instance of Moodle:
 
 ```
 docker run -d --name DB -p 3306:3306 -e MYSQL_DATABASE=moodle -e MYSQL_ROOT_PASSWORD=moodle -e MYSQL_USER=moodle -e MYSQL_PASSWORD=moodle mysql:5
-docker run -d -P --name moodle --link DB:DB -e MOODLE_URL=http://localhost:8080 -p 8080:80 jhardison/moodle
+docker run -d -P --name moodle --link DB:DB -e MOODLE_URL=http://localhost:8080 -p 8080:80 uschti/moodle
 ```
 
 You can visit the following URL in a browser to get started:
 
 ```
-http://localhost:8080 
+http://localhost:8080
 ```
 
 ### Production Deployment
@@ -49,7 +51,7 @@ In the following steps, replace MOODLE_URL with your appropriate FQDN.
 * Deploy With Docker
 ```
 docker run -d --name DB -p 3306:3306 -e MYSQL_DATABASE=moodle -e MYSQL_ROOT_PASSWORD=moodle -e MYSQL_USER=moodle -e MYSQL_PASSWORD=moodle mysql:5
-docker run -d -P --name moodle --link DB:DB -e MOODLE_URL=http://moodle.company.com -p 80:80 jhardison/moodle
+docker run -d -P --name moodle --link DB:DB -e MOODLE_URL=http://moodle.company.com -p 80:80 uschti/moodle
 ```
 
 * Deploy with Docker Compose
@@ -67,7 +69,7 @@ Once the environment file is filled in you may bring up the service with:
 
 
 ## Caveats
-The following aren't handled, considered, or need work: 
+The following aren't handled, considered, or need work:
 * moodle cronjob (should be called from cron container)
 * log handling (stdout?)
 * email (does it even send?)
@@ -76,4 +78,3 @@ The following aren't handled, considered, or need work:
 
 This is a fork of [Jade Auer's](https://github.com/jda/docker-moodle) Dockerfile.
 This is a reductionist take on [sergiogomez](https://github.com/sergiogomez/)'s docker-moodle Dockerfile.
-

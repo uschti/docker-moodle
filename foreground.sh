@@ -12,5 +12,6 @@ trap "kill -TERM -$pgrp; exit" EXIT TERM KILL SIGKILL SIGTERM SIGQUIT
 
 
 source /etc/apache2/envvars
+source /etc/apache2/env_secrets_expand.sh
 tail -F /var/log/apache2/* &
 exec apache2 -D FOREGROUND
