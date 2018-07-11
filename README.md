@@ -58,7 +58,7 @@ docker run -d -P --name moodle --link DB:DB -e MOODLE_URL=http://moodle.company.
 
 Pull the latest source from GitHub:
 ```
-git clone https://github.com/jmhardison/docker-moodle.git
+git clone https://github.com/uschti/docker-moodle.git
 ```
 
 Update the `moodle_variables.env` file with your information. Please note that we are using v3 compose files, as a stop gap link env variable are manually filled since v3 no longer automatically fills those for use.
