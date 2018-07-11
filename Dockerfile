@@ -2,11 +2,10 @@
 # Dockerfile for moodle instance. more dockerish version of https://github.com/sergiogomez/docker-moodle
 # Forked from Jon Auer's docker version. https://github.com/jda/docker-moodle
 FROM ubuntu:16.04
-MAINTAINER Jonathan Hardison <jmh@jonathanhardison.com>
+MAINTAINER Andrea Pellegrini <uschti@gmail.com>
 
 VOLUME ["/var/moodledata"]
 EXPOSE 80 443
-COPY moodle-config.php /var/www/html/config.php
 
 # Keep upstart from complaining
 # RUN dpkg-divert --local --rename --add /sbin/initctl
@@ -19,7 +18,6 @@ ENV DEBIAN_FRONTEND noninteractive
 # Set ENV Variables externally Moodle_URL should be overridden.
 ENV MOODLE_URL http://127.0.0.1
 
-
 RUN apt-get update && \
 	apt-get -y install mysql-client pwgen python-setuptools iputils-ping curl git unzip apache2 php \
 		php-gd libapache2-mod-php postfix wget supervisor php-pgsql libcurl3 \
@@ -29,6 +27,8 @@ RUN apt-get update && \
 	mv /tmp/moodle/* /var/www/html/ && \
 	rm /var/www/html/index.html && \
 	chown -R www-data:www-data /var/www/html
+
+COPY moodle-config.php /var/www/html/config.php
 
 ADD ./foreground.sh /etc/apache2/foreground.sh
 ADD ./env_secrets_expand.sh /etc/apache2/env_secrets_expand.sh
