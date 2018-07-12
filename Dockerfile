@@ -17,6 +17,9 @@ ENV DEBIAN_FRONTEND noninteractive
 # Database info and other connection information derrived from env variables. See readme.
 # Set ENV Variables externally Moodle_URL should be overridden.
 ENV MOODLE_URL http://127.0.0.1
+ENV MOODLE_MEMORY_LIMIT 10M
+ENV MOODLE_POST_MAX_SIZE 10M
+ENV MOODLE_UPLOAD_MAX_FILESIZE 10M
 
 RUN apt-get update && \
 	apt-get -y install mysql-client pwgen python-setuptools iputils-ping curl git unzip apache2 php \
@@ -41,6 +44,14 @@ RUN chmod 0644 /etc/cron.d/moodlecron
 
 # Enable SSL, moodle requires it
 RUN a2enmod ssl && a2ensite default-ssl  #if using proxy dont need actually secure connection
+
+# autorise .htaccess files
+RUN a2enmod rewrite && a2enmod env
+RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+
+# Add custom .htaccess file with PHP upload size limit ovverride by ENV var MOODLE_MAX_UPLOAD_SIZE
+RUN touch /var/www/html/.htaccess
+RUN chmod 0444 /var/www/html/.htaccess
 
 # Cleanup, this is ran to reduce the resulting size of the image.
 RUN apt-get clean autoclean && apt-get autoremove -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/lib/dpkg/* /var/lib/cache/* /var/lib/log/*
