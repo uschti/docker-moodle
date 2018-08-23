@@ -4,9 +4,6 @@
 FROM ubuntu:16.04
 MAINTAINER Andrea Pellegrini <uschti@gmail.com>
 
-VOLUME ["/var/moodledata"]
-EXPOSE 80 443
-
 # Keep upstart from complaining
 # RUN dpkg-divert --local --rename --add /sbin/initctl
 # RUN ln -sf /bin/true /sbin/initctl
@@ -33,6 +30,8 @@ RUN apt-get update && \
 
 COPY moodle-config.php /var/www/html/config.php
 
+RUN cp -r /var/www/html/theme /var/www/html/theme.ORIG
+
 ADD ./foreground.sh /etc/apache2/foreground.sh
 ADD ./env_secrets_expand.sh /etc/apache2/env_secrets_expand.sh
 
@@ -55,5 +54,9 @@ RUN chmod 0444 /var/www/html/.htaccess
 
 # Cleanup, this is ran to reduce the resulting size of the image.
 RUN apt-get clean autoclean && apt-get autoremove -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/lib/dpkg/* /var/lib/cache/* /var/lib/log/*
+
+VOLUME ["/var/moodledata"]
+VOLUME ["/var/www/html/theme"]
+EXPOSE 80 443
 
 CMD ["/etc/apache2/foreground.sh"]
