@@ -2,14 +2,15 @@ docker-moodle
 =============
 [![](https://images.microbadger.com/badges/image/uschti/moodle.svg)](https://microbadger.com/images/uschti/moodle "Get your own image badge on microbadger.com")
 
-A Dockerfile that installs and runs the latest Moodle 3.4 stable, with external MySQL Database.
+A Dockerfile that installs and runs the latest Moodle 3.6 stable, with external MySQL Database.
 
 It include the Docker secret expand script to allow Docker secret to get recognized as Environment variables, thanks to [medium.com](https://medium.com/@basi/docker-environment-variables-expanded-from-secrets-8fa70617b3bc).
 
 `Note: DB Deployment uses version 5 of MySQL. MySQL:Latest is now v8.`
 
 Tags:
-* latest - v3.5.3 -> 3.5.3 (TAG: MOODLE_35_STABLE)
+* latest - v3.6 -> 3.6 (TAG: MOODLE_36_STABLE)
+* v3.6 - 3.6 stable
 * v3.5.3 - 3.5 stable
 * v3.5.2 - 3.5 stable
 * v3.5-02 - 3.5 stable
