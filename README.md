@@ -9,7 +9,8 @@ It include the Docker secret expand script to allow Docker secret to get recogni
 `Note: DB Deployment uses version 5 of MySQL. MySQL:Latest is now v8.`
 
 Tags:
-* latest - v3.5.2 -> 3.5.2 (TAG: MOODLE_35_STABLE)
+* latest - v3.5.3 -> 3.5.3 (TAG: MOODLE_35_STABLE)
+* v3.5.3 - 3.5 stable
 * v3.5.2 - 3.5 stable
 * v3.5-02 - 3.5 stable
 * v3.5 - 3.5 stable
