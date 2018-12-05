@@ -9,7 +9,8 @@ It include the Docker secret expand script to allow Docker secret to get recogni
 `Note: DB Deployment uses version 5 of MySQL. MySQL:Latest is now v8.`
 
 Tags:
-* latest - v3.6 -> 3.6 (TAG: MOODLE_36_STABLE)
+* latest - v3.6.1 -> 3.6 (TAG: MOODLE_36_STABLE)
+* v3.6.1 - 3.6 stable
 * v3.6 - 3.6 stable
 * v3.5.3 - 3.5 stable
 * v3.5.2 - 3.5 stable
@@ -37,8 +38,7 @@ When running locally or for a test deployment, use of localhost is acceptable.
 To spawn a new instance of Moodle:
 
 ```
-docker run -d --name DB -p 3306:3306 -e MYSQL_DATABASE=moodle -e MYSQL_ROOT_PASSWORD=moodle -e MYSQL_USER=moodle -e MYSQL_PASSWORD=moodle mysql:5
-docker run -d -P --name moodle --link DB:DB -e MOODLE_URL=http://localhost:8080 -p 8080:80 uschti/moodle
+docker run -d -P --name moodle -e MOODLE_URL=http://localhost:8080 -p 8080:80 uschti/moodle
 ```
 
 You can visit the following URL in a browser to get started:
